@@ -19,7 +19,7 @@ const MapComponent = () => {
         }
       );
     }
-  }, []); 
+  }, []); // hello ?
 
  
   if (!isLocationLoaded) {
