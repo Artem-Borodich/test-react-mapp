@@ -19,7 +19,7 @@ const MapComponent = () => {
         }
       );
     }
-  }, []); // ghbdtn vbh 
+  }, []); 
 
  
   if (!isLocationLoaded) {
