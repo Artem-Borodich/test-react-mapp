@@ -1,15 +1,22 @@
-// src/App.js
-import React from 'react';
-import './App.css'; 
-import Map from './components/Map'; 
+// src/App.jsx
+import React, { useState } from 'react';
+import SearchBar from './components/SearchBar';
+import MapComponent from './components/MapComponent';
 
-function App() {
+const App = () => {
+  const [searchLocation, setSearchLocation] = useState(null);
+
+  const handleSearch = (location) => {
+    setSearchLocation(location);
+  };
+
   return (
-    <div className="App">
-     <h1>map</h1> 
-      <Map /> 
+    <div>
+      <h1>City Guide</h1> {/* Проверьте, отображается ли заголовок */}
+      <SearchBar onSearch={handleSearch} />
+      <MapComponent searchLocation={searchLocation} />
     </div>
   );
-}
+};
 
 export default App;
