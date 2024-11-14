@@ -5,6 +5,27 @@ const MapComponent = ({ searchLocation }) => {
   const [userLocation, setUserLocation] = useState(null);
   const [routeVisible, setRouteVisible] = useState(false); // Флаг для отображения маршрута
 
+  // Массив достопримечательностей Витебска
+  const attractions = [
+ 
+    {
+      name: 'Музей Марка Шагала',
+      coordinates: [55.200531, 30.190551],
+      description: 'Музей, посвящённый великому художнику, родившемуся в Витебске.',
+    },
+    {
+      name: 'Центральный парк культуры и отдыха',
+      coordinates: [55.186099, 30.200473],
+      description: 'Популярное место отдыха горожан с озером и многочисленными аллеями.',
+    },
+    {
+      name: 'Витебский театр имени Якуба Коласа',
+      coordinates: [55.193327, 30.201742],
+      description: 'Главный театр города, основанный в 1939 году.',
+    },
+    // Добавьте больше достопримечательностей, если нужно
+  ];
+
   useEffect(() => {
     // Получаем геопозицию пользователя
     navigator.geolocation.getCurrentPosition(
@@ -23,7 +44,7 @@ const MapComponent = ({ searchLocation }) => {
     if (userLocation && searchLocation) {
       setRouteVisible(true);
     }
-  }, [userLocation, searchLocation]); // Запуск после получения обоих значений
+  }, [userLocation, searchLocation]);
 
   return (
     <div style={{ height: '100vh' }}>
@@ -63,6 +84,24 @@ const MapComponent = ({ searchLocation }) => {
               />
             )}
 
+            {/* Маркеры для достопримечательностей Витебска */}
+            {attractions.map((attraction, index) => (
+             <Placemark
+             
+             key={index}
+             geometry={attraction.coordinates}
+             options={{
+               iconColor: 'green', // Цвет маркера
+               preset: 'islands#greenCircleIcon', // Стиль маркера с цветом
+             }}
+             properties={{
+               // Текст будет отображаться рядом с маркером
+               iconContent: attraction.name,  // Отображаем название достопримечательности
+             }}
+           />
+           
+            ))}
+
             {/* Построение маршрута между двумя точками с использованием RoutePanel */}
             {routeVisible && userLocation && searchLocation && (
               <RoutePanel
@@ -83,8 +122,6 @@ const MapComponent = ({ searchLocation }) => {
       ) : (
         <p>Загрузка карты...</p>
       )}
-
-      {/* Кнопка больше не требуется, маршрут строится автоматически */}
     </div>
   );
 };
